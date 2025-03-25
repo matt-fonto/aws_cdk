@@ -31,6 +31,21 @@ table.grantReadWriteData(lambdaFunction);
 bucket.grantReadWrite(lambdaFunction);
 ```
 
+### 1.1 Step by step
+
+#### 1.1.1. One-person setup
+
+1. Write CDK code
+2. `cdk deploy`
+3. CloudFormation Template
+4. CloudFormation Deployment
+
+#### 1.1.2. Teams
+
+Automated deployments
+
+- The same step as above, but between step 1 and 2, there is a PR openning + Github CI/CD
+
 ## 2. CDK vs. CloudFormation
 
 | Feature         | AWS CDK                                               | CloudFormation                               |
@@ -62,3 +77,53 @@ cdk list # list all stacks in the app
 cdk doctor # diagnose environment issues
 cdk bootstrap # setup s3 buckets and roles for asset deployment (must run once per env)
 ```
+
+## 4. Constructs
+
+- It's a building-block in AWS
+- It can represent a single or multiple AWS resources
+- All CDK code is a tree of constructs
+- Example: `Bucket`, `Function`, Vpc`, custom classes, etc
+
+### 4.1 Level 1 (L1): CFN (CloudFormation) Resources
+
+- Direct 1:1 mapping with CloudFormation(`Cfn*`)
+- Full control, no validation or convenience
+- Very verbose
+
+```ts
+new s3.CfnBucket(this, "MyBucket", {
+  versioningConfiguration: { status: "Enabled" },
+});
+```
+
+Use when:
+
+- No L2 exists yet
+- Need of rarely-used property
+
+### 4.2 Level 2 (L2): AWS Resources
+
+- Abstract L1 with sane defaults and validations
+- Idiomatic, easier to use
+
+```ts
+new s3.Bucket(this, "MyBucket", {
+  versioned: true,
+});
+```
+
+Use L2 by default -- it's safer, readable, and upgradable
+
+### 4.3 Level 3 (L3): Construct compositions
+
+- Opinionated, reusable combos of L2s
+- Speeds up development for common patterns
+
+```ts
+new apigateway.LambdaRestApi(this, "MyApi", {
+  handler: myLambda,
+});
+```
+
+Use for productivity and fast infra scaffolding
