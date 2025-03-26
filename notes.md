@@ -84,6 +84,11 @@ cdk bootstrap # setup s3 buckets and roles for asset deployment (must run once p
 - It can represent a single or multiple AWS resources
 - All CDK code is a tree of constructs
 - Example: `Bucket`, `Function`, Vpc`, custom classes, etc
+- Nice resource: https://constructs.dev/
+- Docs: https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html
+
+Abstraction level (from lower to higher):
+L1 -> L2 -> L3
 
 ### 4.1 Level 1 (L1): CFN (CloudFormation) Resources
 
@@ -106,6 +111,11 @@ Use when:
 
 - Abstract L1 with sane defaults and validations
 - Idiomatic, easier to use
+- Applies to a single resource
+- Medium abstraction
+- Security best practices
+- Helper methods
+- Most commonly used
 
 ```ts
 new s3.Bucket(this, "MyBucket", {
@@ -119,6 +129,8 @@ Use L2 by default -- it's safer, readable, and upgradable
 
 - Opinionated, reusable combos of L2s
 - Speeds up development for common patterns
+- Defines a large infra piece
+- Use for well-established patterns
 
 ```ts
 new apigateway.LambdaRestApi(this, "MyApi", {
@@ -127,3 +139,102 @@ new apigateway.LambdaRestApi(this, "MyApi", {
 ```
 
 Use for productivity and fast infra scaffolding
+
+## 5. Stacks
+
+- Unit of deployment
+- Collection of AWS resources defined as a single unit
+- Created, updated, or deleted together
+- Maps to a CloudFormation stack
+- A way to organize resources
+
+```ts
+new MyStack(app, "MyStack", { env: { region: "us-east-1" } });
+```
+
+### 5.1 Best practices
+
+- One responsibility per stack (e.g., NetworkStack, AppStack)
+- Keep stack small and modular
+
+### 5.2 Stacks & Microservices
+
+- Stacks are typically used to organize microservices
+- Separation of concerns (each service = one stack)
+- Independent deployments
+- Cross-stack references if services need to talk
+- Works well with CI/CD, feature flags, and staging setups
+
+```ts
+Example:
+
+ServiceAStack -> Lambda + API + DB
+ServiceBStack -> Same, isolated
+SharedInfraStack -> VPC, S3, etc., imported by others
+```
+
+## 6. App
+
+What is a CDK App?
+
+- The root construct, the entry point of your CDK project
+- Where you define and group stacks
+- Represented by `new cdk.App()` in the code
+- When we run `cdk synth`, the app synthesizes all its stacks into CloudFormation templates
+- The container that holds and manages your infra units (Stacks)
+
+```ts
+const app = new cdk.App();
+
+new AuthStack(app, "AuthStack");
+new ApiStack(app, "ApiStack");
+new FrontendStack(app, "FrontendStack");
+```
+
+- We can have only one App per project, as many stacks per app, and as many contructs per stack
+
+```js
+App/
+  /stack1
+    construct1
+    construct2
+    contruct3
+  /stack2
+    construct1
+    construct2
+    contruct3
+```
+
+## 7. Step by step
+
+### 7.1 Security
+
+For daily operations and automations, never user the AWS root user. Instead, create/use an IAM User or Role instead
+
+- Create an IAM user with least-privilege permissions
+
+### 7.2 Installation AWS CLI and CDK
+
+```bash
+# we need node js and typescript installed
+# npm -g install typescript
+
+brew install awscli # install aws cli
+aws --version # check version
+
+npm install -g aws-cdk # install aws cdk cli
+cdk --version
+```
+
+### 7.3 Configuration
+
+```bash
+aws configure
+
+# access key
+# secret access key
+# default region name: eu-central-1
+# default output format: json
+
+aws sts get-caller-identity
+```
