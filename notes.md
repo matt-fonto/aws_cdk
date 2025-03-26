@@ -238,3 +238,11 @@ aws configure
 
 aws sts get-caller-identity
 ```
+
+### 7.4 Getting started
+
+```bash
+cdk init app --language typescript
+```
+
+- By using the CDK, we can write unit tests to ensure it's working as expected
