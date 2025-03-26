@@ -73,9 +73,14 @@ cdk diff # show changes between deployed and local verion
 cdk destroy # delete deployed stack
 
 # Utilities
+cdk help # list of all commands
 cdk list # list all stacks in the app
 cdk doctor # diagnose environment issues
 cdk bootstrap # setup s3 buckets and roles for asset deployment (must run once per env)
+
+# Auth profiles
+cdk context # view/set cached context values
+cdk --profile myprofile # run cdk with a specific aws profile
 ```
 
 ## 4. Constructs
@@ -246,3 +251,25 @@ cdk init app --language typescript
 ```
 
 - By using the CDK, we can write unit tests to ensure it's working as expected
+
+#### 7.4.1 Folder structure
+
+```
+my-cdk-app/
+├── bin/
+│   └── my-cdk-app.ts        # Entry point (instantiates the CDK app and stacks)
+├── lib/
+│   └── my-cdk-app-stack.ts  # Defines your infrastructure (resources)
+├── test/
+│   └── my-cdk-app.test.ts   # Jest tests for your stack
+├── cdk.json                 # CDK CLI config (specifies app entry point)
+├── package.json             # Node project config
+├── tsconfig.json            # TypeScript config
+├── jest.config.js           # Test config
+└── .gitignore
+```
+
+- bin: main file to instantiate app and stacks | Main config
+- lib: actual CDK constructs and stack definitions | Infra Logic
+- cdk.json: Entry for CDK CLI to know what to run on `cdk synth`, etc
+- package.json: manages CDK packages and deps
