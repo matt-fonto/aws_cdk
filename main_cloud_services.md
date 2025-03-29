@@ -37,3 +37,36 @@
 - You don't need to do anything to scale read/write
 - Managed service: cloud provider manages the infrastructure required for you
   - It's abstracted away from you
+
+## 3. Database (RDS/DynamoDB)
+
+- Managed solution for storing database
+- Nobody wants to host their database, we want that abstracted away
+- AWS takes open-source software (MySQL, Postgres) and hosts it (make a managed service out of it), providing ease-of-use
+- DynamoDB: proprietary database. Difficult to migrate (vendor lock-in)
+- Postgres: non-proprietary database. Easier to migrate
+
+## 4. FaaS (Function as a Service) (Lambda)
+
+- Code is pretty much deployed
+- No worries with the environment where the code runs
+- Ideal for APIs, webhooks, automation, lightweight backend logic
+- When running Lambdas we have access to compute (CPU), but no disk
+
+### 4.1 Concept
+
+- FaaS allows code to run in response to events without managing servers
+
+#### What it does
+
+- Runs function on demand
+- Scales automatically
+- Triggers from HTTP requests, S3 uploads, database changes, etc
+
+#### What it abstracts
+
+- Server provisioning and scaling (no EC2 setup)
+- OS management (patching, updating)
+- Concurrency handling
+- Load balancing
+- Idle cost (pay-per-invocation)
