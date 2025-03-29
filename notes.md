@@ -273,3 +273,15 @@ my-cdk-app/
 - lib: actual CDK constructs and stack definitions | Infra Logic
 - cdk.json: Entry for CDK CLI to know what to run on `cdk synth`, etc
 - package.json: manages CDK packages and deps
+
+## 8. IaC (Infrastructure as Code) generator
+
+- Go to CloudFormation/IaC generator
+- You will have a CloudFormation file based on your infra
+
+```bash
+cdk migrate --stack-name <stack-name> --language <language> --from-path <path>
+```
+
+- It allows us to migrate from manually created architecture to CDK
+- It migrates to L1 constructs, not L2
