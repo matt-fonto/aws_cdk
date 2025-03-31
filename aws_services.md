@@ -2,6 +2,8 @@
 
 ![3-tier-architecture](image.png)
 
+- Many AWS services are abstractions over open-source software
+
 ## 1. Individual Services
 
 ### 1.1. DNS: Route53
@@ -15,6 +17,7 @@
 
 - Distributes traffic
 - There are different strategies, either through the HTTP header or through the network layer
+- Similar to: NGINX, Traefik
 
 ### 1.3. Web Backend Layer: EC2 (Elastic Compute Cloud)
 
@@ -34,6 +37,7 @@
   - Used for Docker/containers
   - Helps manage containers
   - Something in the middle between EC2 and Lambda
+  - Similar to: Docker + Docker Compose, Kubernetes
 
 ### 1.4. Application Layer
 
@@ -45,11 +49,13 @@
 - Authorization
 - Validates tokens
 - Model validation for API requests
+- Similar to: Express.js middlewares
 
 ### 1.6. User Pools (Cognito)
 
 - Create user pools, meaning you can route users through it to create their profile
 - Very useful for applications that require user registration
+- Similar to: Auth0, Firebase Auth, Supabase Auth
 
 ### 1.7. Database
 
@@ -60,8 +66,8 @@
     - A bit more of "hands-off" db
     - What lambda did for EC2, Aurora does for RDS
   - RDS: Selects the db config you want
+    - Similar to: PostgresSQL, MySQL
 - NoSQL Database
-
   - DynamoDB: fully managed db
   - DocumentDB: Similar to MongoDB
   - OpenSearch: perform more complex queries and grouping
@@ -80,11 +86,13 @@ Code commit, build, deploy, pipeline
 #### 1.9.1. Code Commit
 
 - Save your source code
+- Similar to: GitHub
 
 #### 1.9.2. Code Build
 
 - Useful to build CI/CD pipelines
 - Build and testing the code
+- Similar to: GitHub actions
 
 #### 1.9.3. Code Deploy
 
@@ -99,6 +107,7 @@ Code commit, build, deploy, pipeline
 - CloudWatch: Evaluate metrics on AWS metrics
 
   - CPU usage, memory usage, lambda invocations, etc
+  - Similar to: Prometheus, Grafana
 
 - You need to keep checking whether the software is up and running as expected
 - Logging
@@ -118,7 +127,49 @@ Code commit, build, deploy, pipeline
 - Infrastructure as code (IaC)
 - Infrastructure is written through code
 - CloudFormation: YAML, JSON config files that provisions infra
+  - Similar to: Terraform
 - CDK: Use a programming language to build the infra, which will be converted to CloudFormation
+
+### 1.12. Rapid Development (Amplify | SAM)
+
+- Amplify: Like Vercel + Firebase
+  - Rapid deployment of full-stack apps
+  - User authentication + authorization
+  - Functions on functionality
+  - Abstraction of the services
+  - Well-defined box
+    - If you prefer to stay in a very-well delineated box, Amplify might be the solution. Otherwise, writing your own CDK does the work
+- SAM: Serverless application model
+
+  - Provides common cloud infra patterns
+  - Provides some patterns, similar to high-level (L3) CDK constructs
+
+### 1.13. Service Notification | Event Coordination (SNS | SQS | EventBridge | Step Function)
+
+- SNS: Publishes notifications to a topic that can have multiple subscribers
+  - We can have publishers + subscribers (lambda, http endpoint, SQS)
+  - Similar to: Kakfa
+  - Tell other about data or data changes
+- SQS: Simple Queue Service
+  - Holds messages to process them after
+  - Similar to: Event-loop JS
+  - Notifies when something changes in some service data
+- EventBridge: Similar to SNS
+  - Delivers information based on triggers
+  - If X happens, deliver to Y
+- Step Function: Defines workflow
+  - Build some step-by-step flow
+  - Orchestration flows that run through steps
+
+### 1.14. General Object Storage | Blob storage (S3 - Simple Storage Service)
+
+- Similar to BLOB storage
+- Allows storing massive amounts of data very cheaply
+- Can store any type of media
+
+### 1.15. Analytical Processing (EMR)
+
+- EMR:
 
 ## 2. Packaged Services (PaaS - Platform-as-a-Service)
 
