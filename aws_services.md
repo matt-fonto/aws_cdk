@@ -4,19 +4,19 @@
 
 ## 1. Individual Services
 
-### DNS: Route53
+### 1.1. DNS: Route53
 
 - Define DNS configuration
 - Where you route traffic to
 - Supports health-checking
 - Defines externally facing apis/endpoints
 
-### Load Balancer: Elastic Load Balancer
+### 1.2. Load Balancer: Elastic Load Balancer
 
 - Distributes traffic
 - There are different strategies, either through the HTTP header or through the network layer
 
-### Web Backend Layer: EC2 (Elastic Compute Cloud)
+### 1.3. Web Backend Layer: EC2 (Elastic Compute Cloud)
 
 - EC2: Rent VMs for the hour
   - Pros:
@@ -35,23 +35,23 @@
   - Helps manage containers
   - Something in the middle between EC2 and Lambda
 
-### Application Layer
+### 1.4. Application Layer
 
 - Same fundamental building blocks as the backend layer (EC2, Lambda, ECS)
 
-### API Gateway
+### 1.5. API Gateway
 
 - API throtlling
 - Authorization
 - Validates tokens
 - Model validation for API requests
 
-### User Pools (Cognito)
+### 1.6. User Pools (Cognito)
 
 - Create user pools, meaning you can route users through it to create their profile
 - Very useful for applications that require user registration
 
-### Database
+### 1.7. Database
 
 - Elastic Cache
   - Demands some infra node management
@@ -61,9 +61,64 @@
     - What lambda did for EC2, Aurora does for RDS
   - RDS: Selects the db config you want
 - NoSQL Database
+
   - DynamoDB: fully managed db
   - DocumentDB: Similar to MongoDB
   - OpenSearch: perform more complex queries and grouping
+
+### 1.8. Cache (CloudFront)
+
+- CDN: Content Delivery Network
+- Caches and serves your content from edge locations closer to users, reducing latency and speeding up delivery
+- Delivers static & dynamic content faster
+- Reduces load on origin server (e.g., S3, EC2, API Gateway)
+
+### 1.9. Deployment
+
+Code commit, build, deploy, pipeline
+
+#### 1.9.1. Code Commit
+
+- Save your source code
+
+#### 1.9.2. Code Build
+
+- Useful to build CI/CD pipelines
+- Build and testing the code
+
+#### 1.9.3. Code Deploy
+
+- Takes the artifacts from code commit and code build and deploys it
+
+#### 1.9.4. Code Pipeline
+
+- Deployment orchestration service
+
+### 1.9. Monitoring (CloudWatch | CloudTrail)
+
+- CloudWatch: Evaluate metrics on AWS metrics
+
+  - CPU usage, memory usage, lambda invocations, etc
+
+- You need to keep checking whether the software is up and running as expected
+- Logging
+
+- CloudTrail: Audit of operations that are being performed
+
+  - Who is performing what
+  - Who's accessing different services
+
+### 1.10. Security (IAM - Identity and Access Management)
+
+- Creation of users and roles and their permission
+- Deny everything unless someone allows it
+
+### 1.11. Rapid Deployment (CloudFormation | CDK)
+
+- Infrastructure as code (IaC)
+- Infrastructure is written through code
+- CloudFormation: YAML, JSON config files that provisions infra
+- CDK: Use a programming language to build the infra, which will be converted to CloudFormation
 
 ## 2. Packaged Services (PaaS - Platform-as-a-Service)
 
