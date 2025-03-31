@@ -167,9 +167,25 @@ Code commit, build, deploy, pipeline
 - Allows storing massive amounts of data very cheaply
 - Can store any type of media
 
-### 1.15. Analytical Processing (EMR)
+### 1.15. Analytical Processing (EMR | Athena)
 
-- EMR:
+- EMR: Large scale distributed data-processing
+- Athena: Serveless big-data analysis
+  - Athena can crawl S3, automatically detect its schema, and creates tables, which can be queried
+  - Run queries on data storaged on S3
+
+### 1.16. Data Warehouse (Redshift)
+
+- Redshift: good for interacting with data at scale
+
+### 1.17. Dashboard (QuickSight)
+
+- QuickSight: PowerBI, used for generating graphs and visuals based on the data
+
+### 1.18 Network Boundary (VPC - Virtual Private Cloud)
+
+- Isolated network
+- Private networking spaces for services
 
 ## 2. Packaged Services (PaaS - Platform-as-a-Service)
 
