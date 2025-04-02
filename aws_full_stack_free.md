@@ -73,3 +73,6 @@ repo-root/
 # Infra Diagram
 
 ![infra-diagram](image-1.png)
+
+AWS Startups: https://aws.amazon.com/startups
+AWS Credits: https://aws.amazon.com/startups/credits
