@@ -1,4 +1,4 @@
-# Infra Tech Stack
+# 1. Infra Tech Stack
 
 ## Authentication: AWS Cognito
 
@@ -36,7 +36,7 @@
 
 - Free tier: 62K emails per month for free
 
-# Infra Repo ide
+# 2. Infra Repo idea
 
 ```
 repo-root/
@@ -70,9 +70,24 @@ repo-root/
 └── .gitignore
 ```
 
-# Infra Diagram
+# 3. Infra Diagram
 
 ![infra-diagram](image-1.png)
 
 AWS Startups: https://aws.amazon.com/startups
 AWS Credits: https://aws.amazon.com/startups/credits
+
+# 4. Step by Step
+
+1. Init CDK
+
+```bash
+mkdir <cdk-folder> && cd <cdk-folter>
+cdk init app --language typescript
+```
+
+2. Install CDK Modules
+
+```bash
+npm install @aws-cdk/aws-lambda @aws-cdk/aws-apigateway @aws-cdk/aws-dynamodb @aws-cdk/aws-cognito @aws-cdk/aws-s3 @aws-cdk/aws-cloudfront @aws-cdk/aws-s3-deployment @aws-cdk/aws-ses
+```
